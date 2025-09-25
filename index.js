@@ -5,7 +5,7 @@ const ejs = require('ejs');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const flash = require('connect-flash');
-const cookieParser = require('cookie-parser');
+/*const cookieParser = require('cookie-parser');*/
 const JWT = require('jsonwebtoken');
 const User = require('./models/user')
 // Controllers
@@ -19,6 +19,8 @@ const saveTasktoday = require('./controllers/storetodayUsercontroller')
 // Middlewares
 const checkDuplicateUser = require('./middleweres/checkDuplicateUser');
 const SearchUser = require('./middleweres/auth')
+const pull_task = require('./controllers/pull-task')
+const check_pull_task = require('./middleweres/checkpulltask')
 // Routes
 // const router = require('./routes/rout')
 
@@ -33,7 +35,6 @@ const MONGO_URI = process.env.MONGO_URI;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-app.use(cookieParser());
 
 
 // Middleware session
@@ -89,8 +90,8 @@ app.get('/destroy-session', (req, res) => {
     res.send('Session ถูกลบแล้ว!');
   });
 });
-
-app.post('/savetask',SearchUser,saveTasktoday)
+app.get('/user-pull-task',pull_task)
+app.post('/savetask',saveTasktoday)
 // Default route
 // app.get('/', (req, res) => res.send('API is running'));
 

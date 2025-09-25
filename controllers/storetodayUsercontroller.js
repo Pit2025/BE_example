@@ -2,12 +2,13 @@ const Tasktoday =require('../models/Taskuser')
 
 
 module.exports = async (req, res) => {
-    const FromCookie = req.cookies.userId;
-    const tasks = req.body.tasks;
-    
+  if (req.session.userId === undefined ){
+    console.log('ไม่ได้login')
+  return 
+  }
   await Tasktoday.findOneAndUpdate(
-  { userId: FromCookie },
-  { tasks: tasks },
+  { userId: req.session.userId },
+  { tasks: req.body.tasks },
   { upsert: true, new: true } // ถ้าไม่มี document ให้สร้างใหม่
 ).then(()=>{ 
         console.log('user savetask')
