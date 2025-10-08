@@ -21,6 +21,7 @@ const checkDuplicateUser = require('./middleweres/checkDuplicateUser');
 const SearchUser = require('./middleweres/auth')
 const pull_task = require('./controllers/pull-task')
 const check_pull_task = require('./middleweres/checkpulltask')
+const checkHave = require('./middleweres/auth')
 // Routes
 // const router = require('./routes/rout')
 
@@ -90,6 +91,7 @@ app.get('/destroy-session', (req, res) => {
     res.send('Session ถูกลบแล้ว!');
   });
 });
+app.get('/checkHave',checkHave)
 app.get('/user-pull-task',pull_task)
 app.post('/savetask',saveTasktoday)
 // Default route
